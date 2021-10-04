@@ -1,0 +1,29 @@
+{
+  "name": "warehouse-management-st",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nmp14ST/Warehouse-management-ST.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nmp14ST/Warehouse-management-ST/issues"
+  },
+  "homepage": "https://github.com/nmp14ST/Warehouse-management-ST#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.8"
+  },
+  "devDependencies": {
+    "jest": "^27.2.4"
+  }
+}
