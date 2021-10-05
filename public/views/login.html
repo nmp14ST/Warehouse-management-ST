@@ -6,11 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/d81acf0f70.js" crossorigin="anonymous"></script>
     <link href="../css/style.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="login-page">
+    <a href="/"><img class="logo" src="../images/SkillStorm.png"></a>
 
+    <header>
+        <span class="login-lock">
+            <i class="fas fa-lock"></i>
+        </span>
+        <h1 class="roboto">Sign In</h1>
+    </header>
+
+    <main class="flex-std-c align-center">
+        <form class="roboto grid fr-5-columns">
+            <label for="email" class="label-2-fr">Enter Email</label>
+            <input class="input-4-fr" type="email" id="email" />
+
+            <label for="password" class="label-2-fr">Enter Password</label>
+            <input class="input-4-fr" type="password" id="password" />
+
+            <label for="rememberMe" class="contains-input">
+                <input id="rememberMe" type="checkbox" /> <span>Remember me</span>
+            </label>
+
+            <button class="button-grid roboto" id="loginBtn" class="submit-btn">Login</button>
+        </form>
+    </main>
 </body>
 
 </html>

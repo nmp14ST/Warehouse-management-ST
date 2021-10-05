@@ -5,12 +5,40 @@ body {margin: 0;}
 
 /* utility classes */
 .roboto {font-family: 'Roboto', sans-serif;}
+
 .flex-std-sb {
     display: flex;
     justify-content: space-between;
 }
+.flex-std-c {
+    display: flex;
+    justify-content: center;
+}
 .align-center {
     align-items: center;
+}
+
+.grid {
+    display: grid;
+}
+.fr-5-columns {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.input-1-fr {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.label-2-fr {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+.input-4-fr {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+.button-grid {
+    grid-column-start: 1;
+    grid-column-end: 5;
 }
 /* end utility classes */
 
@@ -89,7 +117,108 @@ main.landing header h2 {
     }
   }
 
+/* End landing page styling */
+
+/* Login page */
+.login-page .logo {
+    margin: 10px 16px;
+}
+
+.login-lock {
+    position: relative;
+}
+
+.login-lock i {
+    color: #fff;
+    font-size: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.login-lock::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background: teal;
+    border-radius: 50%;
+    z-index: 1;
+}
+.login-lock::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: teal;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-page form {
+    width: 50%;
+    max-width: 600px;
+    margin: 60px auto;
+}
+
+.login-page header {
+    width: 120px;
+    margin: 12px auto;
+    text-align: center;
+}
+
+label {
+    margin-bottom: 4px;
+    margin-left: 2px;
+}
+input {
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    padding: 10px 6px;
+}
+button.button-grid {
+    border-radius: 4px;
+    border: none;
+    background: teal;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.contains-input {
+    position: relative;
+    height: 44px;
+    margin-bottom: 20px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+.contains-input span {
+    position: absolute;
+    top: 50%;
+    left: 36px;
+    transform: translateY(-50%);
+}
+#rememberMe {
+    position: absolute;
+    left: 0;
+    top: 3.5px;
+    width: 20px;
+}
+
+input:focus{
+    background: lightcyan;
+    border: 1px solid blue;
+}
+/* End login page */
+
 @media only screen and (max-width: 600px) {
+    /* Landing */
     main.landing header {
         font-size: 1.2em;
         line-height: 0.8em;
@@ -98,6 +227,14 @@ main.landing header h2 {
         line-height: 1em;
         font-size: 1em;
     }
-}
+    /* End landing */
 
-/* End landing page styling */
+    /* login */
+    .login-page .logo {
+        margin: 4px 16px;
+    }
+    .login-page form {
+        width: 90%;
+        margin: 2px auto;
+    }
+}
