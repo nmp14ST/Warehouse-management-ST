@@ -66,11 +66,28 @@ main.landing header {
 main.landing header h1 {
     letter-spacing: 0.1rem;
     font-weight: 300;
+    visibility: hidden;
+    animation: slide-right 2s forwards;
 }
 main.landing header h2 {
     font-weight: 100;
     font-style: italic;
+    visibility: hidden;
+    animation: slide-right 2s 1s  forwards;
 }
+/* Animation for text to come into screen */
+@keyframes slide-right {
+    from {
+      transform: translateX(-100%) scale(3);
+      filter: blur(6px);
+      visibility: hidden;
+    }
+    to {
+      transform: translateX(0) scale(1);
+      filter: blur(0);
+      visibility: visible;
+    }
+  }
 
 @media only screen and (max-width: 600px) {
     main.landing header {
