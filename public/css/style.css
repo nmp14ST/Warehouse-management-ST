@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;1,100;1,300&display=swap');
+
+* {box-sizing: border-box;}
+body {margin: 0;}
+
+/* utility classes */
+.roboto {font-family: 'Roboto', sans-serif;}
+.flex-std-sb {
+    display: flex;
+    justify-content: space-between;
+}
+.align-center {
+    align-items: center;
+}
+/* end utility classes */
+
+/* Nav bar */
+nav {
+    position: fixed;
+    width: 100vw;
+    background: #000;
+    top: 0;
+    z-index: 2;
+}
+
+.nav-left, .nav-right {
+    margin: 6px 12px;
+    padding: 0 6px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+.logo {
+    width: 150px;
+}
+
+/* Main landing page */
+main.landing {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(teal 0%, 35%, blue 90%), 
+        linear-gradient(to right, teal 0%, 40%, purple 90%),
+        url("../images/warehouse.jpeg");
+    background-blend-mode: screen, difference, lighten;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    top: 0;
+    z-index: 1;
+}
+
+main.landing header {
+    width: 100%;
+    text-align: center;
+    background: #000;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.7em;
+}
+main.landing header h1 {
+    letter-spacing: 0.1rem;
+    font-weight: 300;
+}
+main.landing header h2 {
+    font-weight: 100;
+    font-style: italic;
+}
+
+@media only screen and (max-width: 600px) {
+    main.landing header {
+        font-size: 1.2em;
+        line-height: 0.8em;
+    }
+    main.landing header h2 {
+        line-height: 1em;
+        font-size: 1em;
+    }
+}
+
+/* End landing page styling */
