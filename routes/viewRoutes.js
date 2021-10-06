@@ -19,4 +19,12 @@ router.get("/login", (req, res) => {
     }
 });
 
+router.get("*", (req, res) => {
+    try {
+        res.status(404).sendFile(resolve("public", "views", "404.html"));
+    } catch (err) {
+        console.error(err);
+    }
+})
+
 module.exports = router;
