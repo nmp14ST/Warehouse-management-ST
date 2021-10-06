@@ -12,11 +12,11 @@ const userSchema = mongoose.Schema({
         required: true
     },
     company: String,
-    // Access will be priveledges. 1 is highest 3 is lowest
+    // Access will be priveledges. 1 is highest 4 is lowest
     access: {
         type: Number,
         min: 1,
-        max: 3
+        max: 4
     },
     email: {
         type: String,
