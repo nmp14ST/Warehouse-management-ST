@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("mongoose-unique-validator");
+const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -31,6 +32,21 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.plugin(validator);
+
+UserSchema.pre('save', async function (next) {
+    const user = this;
+
+    // only hash the password if it has been modified (or is new)
+    if (!user.isModified('password')) return next();
+
+    // Hash
+    user.password = await bcrypt.hash(user.password, 10);
+    next();
+});
+
+UserSchema.methods.comparePassword = function (candidatePassword) {
+    return bcrypt.compareSync(candidatePassword, this.password);
+};
 
 const User = mongoose.model("User", userSchema);
 
