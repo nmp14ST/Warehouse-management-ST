@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.plugin(validator);
 
-UserSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
     const user = this;
 
     // only hash the password if it has been modified (or is new)
@@ -44,7 +44,7 @@ UserSchema.pre('save', async function (next) {
     next();
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword) {
+userSchema.methods.comparePassword = function (candidatePassword) {
     return bcrypt.compareSync(candidatePassword, this.password);
 };
 
