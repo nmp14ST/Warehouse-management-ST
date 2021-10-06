@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;1,100;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300&display=swap');
 
 * {box-sizing: border-box;}
 body {margin: 0;}
@@ -189,6 +189,7 @@ button.button-grid {
     color: #fff;
     font-size: 16px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .contains-input {
@@ -203,17 +204,28 @@ button.button-grid {
     top: 50%;
     left: 36px;
     transform: translateY(-50%);
+    font-weight: 400;
 }
 #rememberMe {
     position: absolute;
     left: 0;
-    top: 3.5px;
-    width: 20px;
+    top: 8.5px;
+    width: 22px;
+    height: 22px;
 }
 
 input:focus{
     background: lightcyan;
     border: 1px solid blue;
+}
+
+.form-error {
+    color: crimson;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    margin-bottom: 8px;
+    font-size: 18px;
 }
 /* End login page */
 
