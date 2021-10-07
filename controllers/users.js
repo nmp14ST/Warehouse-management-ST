@@ -18,7 +18,7 @@ const login = async (email, password) => {
         mongoose.connection.close();
         return {
             id: user._id,
-            accessLevel: user.access,
+            access: user.access,
             token: generateToken(user)
         };
     } catch (err) {
@@ -38,7 +38,7 @@ const register = async (firstName, lastName, email, password, company, access) =
         mongoose.connection.close();
         return {
             id: user._id,
-            accessLevel: user.access,
+            access: user.access,
             token: generateToken(user)
         };
     } catch (err) {
