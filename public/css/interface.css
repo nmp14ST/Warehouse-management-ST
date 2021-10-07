@@ -1,0 +1,23 @@
+main.interface {
+    display: flex;
+}
+
+.left-panel, .right-panel, .open-left-button {
+    min-height: 100vh;
+}
+
+.left-panel {
+    background: #ddd;
+    width: calc(25% - 4px);
+}
+
+.open-left-button {
+    background: rgb(255, 196, 85);
+    width: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+    .left-panel {
+        width: calc(100% - 4px);
+    }
+}
