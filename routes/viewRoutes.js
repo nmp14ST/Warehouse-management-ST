@@ -19,6 +19,16 @@ router.get("/login", (req, res) => {
     }
 });
 
+// Interface for app
+router.get("/interface", (req, res) => {
+    try {
+        res.status(200).sendFile(resolve("public", "views", "interface.html"));
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// Any routes not found
 router.get("*", (req, res) => {
     try {
         res.status(404).sendFile(resolve("public", "views", "404.html"));
