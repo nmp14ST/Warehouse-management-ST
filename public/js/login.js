@@ -1,6 +1,10 @@
 const loginBtn = document.getElementById("loginBtn");
 const formError = document.querySelector(".form-error");
 
+if (localStorage.getItem("email")) {
+    document.getElementById("email").value = localStorage.getItem("email");
+}
+
 const login = async (e) => {
     e.preventDefault();
     const email = document.getElementById("email").value;
@@ -28,6 +32,10 @@ const login = async (e) => {
     if (response.status !== 200) {
         formError.textContent = data.message;
         return;
+    }
+
+    if (document.getElementById("rememberMe").checked) {
+        localStorage.setItem("email", email);
     }
 
     localStorage.setItem("user", JSON.stringify(data));
