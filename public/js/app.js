@@ -16,7 +16,7 @@ const data = {
             ]
         },
         {
-            name: "SKillStormPartner",
+            name: "SkillStormPartner",
             founded: 2007,
             warehouses: 2
         },
@@ -44,6 +44,10 @@ const data = {
                                     name: "CoolCompany2",
                                     founded: 2019,
                                     warehouses: 1
+                                }, {
+                                    name: "Nathan's Famous Hotdogs",
+                                    founded: 2016,
+                                    warehouses: 3
                                 }
                             ]
                         }
@@ -71,34 +75,25 @@ const createList = (items) => {
     }
 };
 
-
-// get items in the object
-const getItems = (items) => {
-    for (const item in items) {
-        markupArray.push(`<li> ${item}`);
-        // fetch the parent object
-        let details = items[item];
-        getDetails(details);
-        // push the closing tag for parent
-        markupArray.push("</li>");
-    }
-};
-
 // get details
 const getDetails = (details) => {
     // iterate over the detail items of object
-    markupArray.push(`<li data-id=1>`);
+    markupArray.push(`<li data-id=1><div class="list-div">`);
     for (const detail in details) {
         // fetch the value of each item
 
         if (detail == "children") {
-            markupArray.push("<ul>");
+            markupArray.push("</div><ul>");
             details[detail].forEach((element) => {
                 getDetails(element);
             });
             markupArray.push("</ul>");
         } else {
-            markupArray.push(`<span>${detail}: ${details[detail]} </span>`);
+            if (detail === "warehouses") {
+                markupArray.push(`<span>${detail}: ${details[detail]} </span>`);
+            } else {
+                markupArray.push(`<span>${details[detail]} </span>`);
+            }
         }
     }
     markupArray.push("</li>");
