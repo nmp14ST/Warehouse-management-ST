@@ -5,6 +5,11 @@ if (localStorage.getItem("email")) {
     document.getElementById("email").value = localStorage.getItem("email");
 }
 
+// Redirect if already logged in
+if (localStorage.getItem("user")) {
+    document.location.href = "/interface";
+}
+
 const login = async (e) => {
     e.preventDefault();
     const email = document.getElementById("email").value;
