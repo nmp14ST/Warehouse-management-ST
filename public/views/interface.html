@@ -6,12 +6,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSWM</title>
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/d81acf0f70.js" crossorigin="anonymous"></script>
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../css/interface.css" rel="stylesheet" />
 </head>
 
 <body>
+    <nav class="flex-std-sb align-center">
+        <div class="nav-left">
+            <img class="logo" src="../images/SkillStorm.png" alt="SkillStorm logo" />
+        </div>
+        <div class="nav-right">
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
 
+    <main class="interface">
+        <section class="left-nav">
+
+            <svg class="nav__expand" viewBox="0 0 256 512" width="100" title="angle-right">
+                <path
+                    d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" />
+            </svg>
+
+            <ul class="nav-list">
+                <li class="nav-list-item nav-list-item-active">
+                    <div class="nav-link">
+                        <i class="fas fa-building"></i>
+                        <p>Businesses</p>
+                    </div>
+                </li>
+                <li class="nav-list-item">
+                    <div class="nav-link">
+                        <i class="fas fa-warehouse"></i>
+                        <p>Warehouses</p>
+                    </div>
+                </li>
+                <li class="nav-list-item">
+                    <div class="nav-link">
+                        <i class="fas fa-share"></i>
+                        <p>Transfer Products</p>
+                    </div>
+                </li>
+            </ul>
+
+        </section>
+
+        <div class="open-left-button">
+
+        </div>
+
+        <section class="right-panel">
+
+        </section>
+    </main>
 
     <script src="../js/logout.js"></script>
     <script src="../js/index.js"></script>

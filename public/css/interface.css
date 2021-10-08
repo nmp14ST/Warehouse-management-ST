@@ -1,0 +1,92 @@
+main.interface {
+    display: flex;
+    position: relative;
+    top: 78px;
+}
+
+.left-nav, .right-panel, .open-left-button {
+    min-height: calc(100vh - 78px);
+}
+
+.left-nav {
+    position: relative;
+    background: #ddd;
+    box-shadow: 0 0 10px #000;
+}
+
+.left-nav .nav-list {
+    list-style-type: none;
+}
+
+.nav__expand {
+    width: 2.2rem;
+    height: 2.2rem;
+    fill: #fff;
+    background-color: rgb(255, 176, 30);
+    border-radius: 50%;
+    position: absolute;
+    right: -1.2rem;
+    top: 48%;
+    transform: translateY(-50%);
+    z-index: 99;
+    cursor: pointer;
+    transform: rotatez(-180deg);
+    transition: transform 200ms ease-in-out;
+}
+
+.nav__expand:hover {
+    fill: #000
+}
+
+.left-nav .nav-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.left-nav .nav-list .nav-list-item {
+    transition: all 200ms ease-in;
+    padding: 1.2rem 1.6rem;
+    border-left: 6px solid transparent;
+    cursor: pointer;
+}
+
+.left-nav .nav-list .nav-list-item:hover {
+    background: rgb(194, 255, 255);
+}
+
+.nav-list-item .nav-link {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-weight: 500;
+}
+
+.nav-list-item .nav-link i {
+    color: rgb(255, 176, 30);
+    font-size: 30px;
+}
+
+.nav-list-item.nav-list-item-active {
+    background: #bbb;
+    border-left: 4px solid #5930ff !important;
+}
+
+.nav-list-item.nav-list-item-active i,
+.nav-list-item.nav-list-item-active p {
+    color: #5930ff;
+}
+
+.left-nav.closed .nav__expand {
+    transform: rotatez(0deg);
+}
+
+.left-nav.closed .nav-list-item p {
+    display: none;
+}
+
+.open-left-button {
+    background: rgb(255, 172, 19);
+    width: 4px;
+}

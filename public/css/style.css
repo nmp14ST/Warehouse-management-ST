@@ -70,6 +70,14 @@ nav a {
     width: 150px;
 }
 
+#logoutBtn {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 /* Main landing page */
 main.landing {
     position: relative;
