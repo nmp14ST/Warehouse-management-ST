@@ -1,0 +1,65 @@
+{
+    "name": "SkillStorm",
+    "founded": 2006,
+    "warehouses": 0,
+    "children": [
+        {
+            "name": "TaxesInc",
+            "founded": 2007,
+            "warehouses": 6,
+            "children": [
+                {
+                    "name": "ChildA",
+                    "founded": 2010,
+                    "warehouses": 1
+                }
+            ]
+        },
+        {
+            "name": "SkillStormPartner",
+            "founded": 2007,
+            "warehouses": 2
+        },
+        {
+            "name": "WarehouseSolutions",
+            "founded": 2006,
+            "warehouses": 10,
+            "children": [
+                {
+                    "name": "WHS2",
+                    "founded": 2011,
+                    "warehouses": 12
+                },
+                {
+                    "name": "WHS3",
+                    "founded": 2011,
+                    "warehouses": 5,
+                    "children": [
+                        {
+                            "name": "CoolCompany",
+                            "founded": 2015,
+                            "warehouses": 1,
+                            "children": [
+                                {
+                                    "name": "CoolCompany2",
+                                    "founded": 2019,
+                                    "warehouses": 1
+                                },
+                                {
+                                    "name": "Nathan's Famous Hotdogs",
+                                    "founded": 2016,
+                                    "warehouses": 3
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WHS4",
+                    "founded": 2012,
+                    "warehouses": 2
+                }
+            ]
+        }
+    ]
+}

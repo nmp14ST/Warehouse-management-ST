@@ -1,6 +1,7 @@
 const navExpand = document.querySelector(".nav__expand");
 const nav = document.querySelector(".left-nav");
 const navListItem = document.querySelectorAll(".nav-list-item");
+const rightPanel = document.querySelector(".right-panel");
 
 // Redirect if not logged in
 if (!localStorage.getItem("user")) {
@@ -10,6 +11,7 @@ if (!localStorage.getItem("user")) {
 // Expand and close left-nav bar
 navExpand.addEventListener("click", () => {
     nav.classList.toggle("closed");
+    rightPanel.classList.toggle("closed-left");
 });
 
 //  Change active list item in left nav bar
