@@ -1,4 +1,5 @@
 const markupArray = ['<ul>']
+let data;
 
 const getBusinesses = async () => {
     const response = await fetch("/api/businesses", {
@@ -46,7 +47,7 @@ const getDetails = (details) => {
 
 // Call functions on page load
 window.onload = async () => {
-    const data = await getBusinesses();
+    data = await getBusinesses();
     console.log(data);
     createList(data);
     markupArray.push("</ul>");
