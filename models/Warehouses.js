@@ -10,6 +10,10 @@ const productSchema = mongoose.Schema({
 const warehouseSchema = mongoose.Schema({
     name: String,
     limit: Number,
+    companyID: {
+        type: String,
+        required: true
+    },
     numProducts: {
         type: Number,
         default: 0
