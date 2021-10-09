@@ -8,7 +8,8 @@ const businessSchema = mongoose.Schema({
     founded: Number,
     warehouses: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
 });
 
