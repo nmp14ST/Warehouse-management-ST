@@ -1,6 +1,7 @@
 const markupArray = ['<ul>']
 let data;
 
+// Functions to get and add businesses to html
 const getBusinesses = async () => {
     const response = await fetch("/api/businesses", {
         method: "GET"
@@ -45,6 +46,15 @@ const getDetails = (details) => {
     markupArray.push("</li>");
 };
 
+// Functions to get warehouses and add to html
+// Get warehouses
+const getWarehouses = (e) => {
+    e.preventDefault();
+
+    const id = e.target.getAttribute("data-id");
+    console.log(id);
+}
+
 // Call functions on page load
 window.onload = async () => {
     data = await getBusinesses();
@@ -52,4 +62,13 @@ window.onload = async () => {
     createList(data);
     markupArray.push("</ul>");
     document.querySelector(".right-panel").innerHTML = markupArray.join("");
+
+    // Add event listener to warehouse buttons on businesses
+    const spanBtns = document.querySelectorAll(".span-btn");
+
+    if (spanBtns.length) {
+        spanBtns.forEach(btn => {
+            btn.addEventListener("click", getWarehouses);
+        });
+    }
 };
