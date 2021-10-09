@@ -18,6 +18,11 @@ const warehouseSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    size: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     products: [productSchema]
 });
 
