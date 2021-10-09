@@ -99,10 +99,10 @@ main.interface {
 /* End left nav styling */
 /* Right panel styling */
 .right-panel {
-    width: calc(100%) !important;
+    width: calc(100% - 4px) !important;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 4px;
     overflow: scroll !important;
 }
 
@@ -125,7 +125,7 @@ main.interface {
 
 .right-panel > ul {
     position: relative;
-    left: 216.8px !important;
+    left: 140px !important;
     width: calc(100vw - 216.7px) !important;
 }
 
@@ -153,7 +153,7 @@ main.interface {
     align-items: center;
     padding-top: 3.5vh;
     position: relative;
-    width: 100%;
+    width: 160px;
 }
 
 .right-panel ul li::before {
