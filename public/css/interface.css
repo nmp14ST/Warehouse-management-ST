@@ -209,6 +209,21 @@ main.interface {
   display: block;
 }
 
+.right-panel span.span-btn {
+    cursor: pointer;
+    background: lightblue;
+    margin: 2px 4px;
+    border: 1px solid rgb(136, 225, 255);
+    box-shadow: 2px 2px 4px #555;
+}
+
+.right-panel span.span-btn:hover {
+    background: rgb(144, 170, 255);
+}
+.right-panel span.span-btn:focus {
+    background: rgb(120, 150, 252);
+}
+
 .right-panel li div span:nth-child(3) {
   /* letter-spacing: 0.1em; */
   text-transform: uppercase;
