@@ -1,7 +1,8 @@
 const businessesBtn = document.getElementById("businesses");
 const warehousesBtn = document.getElementById("warehouses");
 
-const markupArray = ['<ul>']
+let markupArray = [];
+let cached = false;
 let data;
 
 // Functions to get and add businesses to html
@@ -17,6 +18,14 @@ const getBusinesses = async () => {
 
 // Switch case for traversing through the data
 const createList = (items) => {
+    // If markupArray is empty add a ul, else return and array already made (psuedo cache)
+    if (!markupArray.length) {
+        markupArray = ["<ul>"];
+    } else {
+        console.log("Didnt query");
+        return;
+    }
+
     switch (typeof items) {
         case "object":
             getDetails(items);
@@ -57,8 +66,14 @@ const appendBusinesses = async (e) => {
     // Get businesses from db
     data = await getBusinesses();
 
+    // Create html tree from data and if not cached (already build array for tree) add </ul> to end of list
     createList(data);
-    markupArray.push("</ul>");
+    if (!cached) {
+        markupArray.push("</ul>");
+    }
+    // Set cached to true after html list has been made
+    cached = true;
+
     document.querySelector(".right-panel").innerHTML = markupArray.join("");
 
     // Add event listener to warehouse buttons on businesses
@@ -80,11 +95,16 @@ const getWarehouses = (e) => {
     console.log(id);
 }
 
+// Get all warehouses and create table on interface screen
+const getAllWarehouses = (e) => {
+    e.preventDefault();
+}
+
 // Call business function on window load
 window.onload = async () => {
     await appendBusinesses();
 };
 
-// LEft-nav-panel button events for changing interface
-
+// Left-nav-panel button events for changing interface
 businessesBtn.addEventListener("click", appendBusinesses);
+warehousesBtn.addEventListener("click", getAllWarehouses);
