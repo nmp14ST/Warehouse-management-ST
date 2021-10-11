@@ -9,7 +9,6 @@ const productSchema = mongoose.Schema({
 
 const warehouseSchema = mongoose.Schema({
     name: String,
-    limit: Number,
     company_name: {
         type: String,
         required: true
@@ -18,6 +17,7 @@ const warehouseSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    limit: Number,
     size: {
         type: Number,
         required: true,
