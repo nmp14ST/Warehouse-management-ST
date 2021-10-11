@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const companySeeds = require("./companies.json");
+const warehouseSeeds = require("./warehouses.json");
 const db = require("../models");
 require("dotenv").config();
 
@@ -10,6 +11,10 @@ const seed = async () => {
 
     await business.save();
     console.log("\n\n Business seeds run \n\n");
+
+    const warehouses = await db.Warehouse.insertMany(warehouseSeeds)
+        .then(() => console.log("\n\n warehouse seeds run"))
+        .catch((err) => console.log("\n" + err + "\n"));
 
     mongoose.connection.close();
 }
