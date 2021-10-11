@@ -92,15 +92,12 @@ const getWarehouses = async (e) => {
     e.preventDefault();
 
     const name = e.target.getAttribute("data-name");
-
     const warehouses = await queryWarehouse(name);
-    displayCompanyWarehouses(warehouses);
+    // Create table from warehouses
+    createWarehouseTable(warehouses);
+    // Remove active tab on business li in left-pnael nav bar
+    document.getElementById("businesses").classList.remove("nav-list-item-active");
 }
-
-// Build html for the warehouses for a specific company 
-const displayCompanyWarehouses = (wh) => {
-
-};
 
 // Fetch request for all warehouses of a specific company
 const queryWarehouse = async (name) => {
@@ -142,6 +139,7 @@ const getAllWarehouses = async (e) => {
     // Create table of warehouses
     createWarehouseTable(fullWarehouseList);
 }
+
 // Create html table using warehouse list (wl)
 const createWarehouseTable = (wl) => {
     // Create table element and headers
