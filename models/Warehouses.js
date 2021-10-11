@@ -10,7 +10,7 @@ const productSchema = mongoose.Schema({
 const warehouseSchema = mongoose.Schema({
     name: String,
     limit: Number,
-    companyID: {
+    company_name: {
         type: String,
         required: true
     },
