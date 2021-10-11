@@ -50,7 +50,7 @@ const getDetails = (details) => {
             // skip
         } else {
             if (detail === "warehouses") {
-                businessMarkupArray.push(`<span data-id=${details["_id"]} class="span-btn">${detail}: ${details[detail]} </span>`);
+                businessMarkupArray.push(`<span data-id=${details["_id"]} data-name="${details["name"]}" class="span-btn">${detail}: ${details[detail]} </span>`);
             } else {
                 businessMarkupArray.push(`<span>${details[detail]} </span>`);
             }
@@ -87,17 +87,36 @@ const appendBusinesses = async (e) => {
 }
 
 // Functions to get warehouses and add to html
-// Get warehouses
+// Get warehouses for specific company
 const getWarehouses = async (e) => {
     e.preventDefault();
 
-    const id = e.target.getAttribute("data-id");
-    console.log(id);
+    const name = e.target.getAttribute("data-name");
 
-    const warehouse = await queryWarehouse(id);
-    console.log(warehouse);
+    const warehouses = await queryWarehouse(name);
+    displayCompanyWarehouses(warehouses);
 }
 
+// Build html for the warehouses for a specific company 
+const displayCompanyWarehouses = (wh) => {
+
+};
+
+// Fetch request for all warehouses of a specific company
+const queryWarehouse = async (name) => {
+    const response = await fetch(`/api/warehouses/${name}`, {
+        method: "GET"
+    });
+
+    if (response.status === 404) {
+        console.log("Cant find warehouses for " + name);
+        return;
+    }
+
+    return response.json();
+}
+
+// Fetch request for all warehouses
 const queryAllWarehouses = async () => {
     const response = await fetch("/api/warehouses", {
         method: "GET"
