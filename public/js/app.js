@@ -1,3 +1,6 @@
+const businessesBtn = document.getElementById("businesses");
+const warehousesBtn = document.getElementById("warehouses");
+
 const markupArray = ['<ul>']
 let data;
 
@@ -46,19 +49,14 @@ const getDetails = (details) => {
     markupArray.push("</li>");
 };
 
-// Functions to get warehouses and add to html
-// Get warehouses
-const getWarehouses = (e) => {
-    e.preventDefault();
+// Get businessses, add to html, and add event listener for getting warehouses specific to that company
+const appendBusinesses = async (e) => {
+    // If button click to get business, prevent default
+    e ? e.preventDefault() : null;
 
-    const id = e.target.getAttribute("data-id");
-    console.log(id);
-}
-
-// Call functions on page load
-window.onload = async () => {
+    // Get businesses from db
     data = await getBusinesses();
-    console.log(data);
+
     createList(data);
     markupArray.push("</ul>");
     document.querySelector(".right-panel").innerHTML = markupArray.join("");
@@ -71,4 +69,22 @@ window.onload = async () => {
             btn.addEventListener("click", getWarehouses);
         });
     }
+}
+
+// Functions to get warehouses and add to html
+// Get warehouses
+const getWarehouses = (e) => {
+    e.preventDefault();
+
+    const id = e.target.getAttribute("data-id");
+    console.log(id);
+}
+
+// Call business function on window load
+window.onload = async () => {
+    await appendBusinesses();
 };
+
+// LEft-nav-panel button events for changing interface
+
+businessesBtn.addEventListener("click", appendBusinesses);
