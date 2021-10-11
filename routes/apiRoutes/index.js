@@ -7,5 +7,6 @@ const businessRoutes = require("./businesses");
 router.use("/products", productRoutes);
 router.use("/users", userRoutes);
 router.use("/businesses", businessRoutes);
+router.use("/warehouses", warehouseRoutes);
 
 module.exports = router;

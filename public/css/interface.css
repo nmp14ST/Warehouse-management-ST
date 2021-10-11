@@ -80,12 +80,14 @@ main.interface {
     color: #5930ff;
 }
 
+/* Closed left panel */
 .left-nav.closed {
     width: 2px;
 }
 
 .left-nav.closed .nav__expand {
     transform: rotatez(0deg);
+    transform: translateX(15px);
 }
 
 .left-nav.closed .nav-list-item {
@@ -244,3 +246,28 @@ main.interface {
   transform: scale(1) translateY(-0.3rem);
 }
 /* end right panel for business */
+
+/* right panel for warehouse table */
+.right-panel table.warehouse-data {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 12px;
+    border-collapse: collapse;
+}
+table.warehouse-data .header-row {
+    background: #ccc;
+    width: 100%;
+}
+.warehouse-data .row {
+    width: 100%;
+    position: relative;
+    right: 0;
+}
+.row:nth-child(odd) {
+    background-color: #dddddd;
+}
+.table-data {
+    border-right: 1px solid #000;
+    padding-left: 6px;
+}
