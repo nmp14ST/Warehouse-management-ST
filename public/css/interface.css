@@ -80,12 +80,14 @@ main.interface {
     color: #5930ff;
 }
 
+/* Closed left panel */
 .left-nav.closed {
     width: 2px;
 }
 
 .left-nav.closed .nav__expand {
     transform: rotatez(0deg);
+    transform: translateX(15px);
 }
 
 .left-nav.closed .nav-list-item {
