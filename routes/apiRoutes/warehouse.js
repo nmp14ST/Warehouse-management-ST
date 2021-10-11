@@ -24,8 +24,6 @@ router.get("/:name", async (req, res) => {
 
         const warehouse = await db.Warehouse.find({ company_name: req.params.name });
 
-        console.log(req.params.name);
-
         if (!warehouse) {
             throw { status: 404, message: "Cannot find that warehouse" };
         }
