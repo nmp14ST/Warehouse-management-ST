@@ -24,7 +24,7 @@ router.get("/:name", async (req, res) => {
 
         const warehouse = await db.Warehouse.find({ company_name: req.params.name }, "_id name company_name numProducts limit size");
 
-        if (!warehouse) {
+        if (!warehouse.length) {
             throw { status: 404, message: "Cannot find that warehouse" };
         }
 
@@ -37,10 +37,16 @@ router.get("/:name", async (req, res) => {
     }
 });
 
+// Find a single warehouse by id
 router.get("/single/:id", async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+        const warehouse = await db.Warehouse.findOne({ _id: req.params.id });
+
+        if (!warehouse) throw { status: 404, message: `Could not find the warehouse with the id ${req.params.id}` }
+
+        res.status(200).json(warehouse);
         mongoose.connection.close();
     } catch (err) {
         mongoose.connection.close();
