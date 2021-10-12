@@ -1,7 +1,11 @@
 main.interface {
-    /* display: flex; */
+    display: flex;
     position: relative;
     top: 78px;
+}
+
+.bg-orange {
+    background-color: rgb(255, 176, 30);
 }
 
 .left-nav, .right-panel, .open-left-button {
@@ -24,7 +28,6 @@ main.interface {
     width: 2.2rem;
     height: 2.2rem;
     fill: #fff;
-    background-color: rgb(255, 176, 30);
     border-radius: 50%;
     position: absolute;
     right: -1.2rem;
@@ -102,10 +105,8 @@ main.interface {
 /* Right panel styling */
 .right-panel {
     width: calc(100% - 4px) !important;
-    position: absolute;
-    top: 0;
-    left: 4px;
     overflow: scroll !important;
+    padding: 0;
 }
 
 .right-panel.closed-left {
@@ -127,13 +128,12 @@ main.interface {
 
 .right-panel > ul {
     position: relative;
-    left: 140px !important;
+    left: 70px !important;
     width: calc(100vw - 216.7px) !important;
 }
 
 .right-panel.closed-left > ul {
     position: relative;
-    left: 140px !important;
 }
 
 .right-panel ul::before {
@@ -248,21 +248,56 @@ main.interface {
 /* end right panel for business */
 
 /* right panel for warehouse table */
+div.table-container {
+    width: 100%;
+    margin: 0 auto;
+    min-height: calc(100vh - 78px);
+}
+
+.table-container div {
+    padding: 0 !important;
+    overflow: scroll;
+}
+
+.table-container h2 {
+    margin: 0;
+    padding: 0;
+}
+
 .right-panel table.warehouse-data {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 12px;
     border-collapse: collapse;
+    position: relative;
 }
+
+.right-panel table.warehouse-data::before,
+.right-panel table.warehouse-data::after
+ {
+    content: "";
+    width: 36px;
+    background: #000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+.right-panel table.warehouse-data::before {
+    left: -36px;
+}
+.right-panel table.warehouse-data::after {
+    right: -36px;
+}
+
 table.warehouse-data .header-row {
     background: #ccc;
     width: 100%;
 }
 .warehouse-data .row {
     width: 100%;
-    position: relative;
     right: 0;
+    cursor: pointer;
 }
 .row:nth-child(odd) {
     background-color: #dddddd;
@@ -270,4 +305,26 @@ table.warehouse-data .header-row {
 .table-data {
     border-right: 1px solid #000;
     padding-left: 6px;
+}
+
+@media only screen and (max-width: 1276px) {
+    .right-panel table.warehouse-data::before,
+    .right-panel table.warehouse-data::after {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .right-panel > ul {
+        left: 140px !important;
+    }
+
+    .right-panel table.warehouse-data {
+        font-size: 0.85em;
+    }
+}
+@media only screen and (max-width: 376px) {
+    .right-panel > ul {
+        left: 160px !important;
+    }
 }

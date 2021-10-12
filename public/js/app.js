@@ -142,14 +142,35 @@ const getAllWarehouses = async (e) => {
 
 // Create html table using warehouse list (wl)
 const createWarehouseTable = (wl) => {
+    // Container for whole table
+    const div = document.createElement("div");
+    div.classList.add("table-container");
+
+    // Section header
+    const h2 = document.createElement("h2");
+    h2.classList.add("text-center", "bg-orange");
+    h2.textContent = "All Warehouses";
+    div.appendChild(h2);
+
+    // flex container under header
+    const flexDiv = document.createElement("div");
+    flexDiv.classList.add("flex-std-c");
+
+    // Divs for styling sides
+    const leftDiv = document.createElement("div");
+    const rightDiv = document.createElement("div");
+    leftDiv.classList.add("side-div", "left");
+    rightDiv.classList.add("side-div", "right");
+
     // Create table element and headers
     const table = document.createElement("table");
     table.classList.add("warehouse-data");
     const headerRow = document.createElement("tr");
     headerRow.classList.add("header-row", "row");
+
     // Create headers from properties of first element
     for (const prop in wl[0]) {
-        if (prop !== "__v" && prop !== "products") {
+        if (prop !== "__v" && prop !== "products" && prop !== "_id") {
             const header = document.createElement("th");
             header.innerText = prop;
             headerRow.appendChild(header);
@@ -161,20 +182,33 @@ const createWarehouseTable = (wl) => {
     for (const ele of wl) {
         const tr = document.createElement("tr");
         tr.classList.add("row");
+        tr.setAttribute("data-id", ele._id);
+
+        // Give event listener for querying specific warehouse selected
+        tr.addEventListener("click", getSingleWarehouse);
+
         for (const prop in ele) {
-            if (prop !== "__v" && prop !== "products") {
+            if (prop !== "__v" && prop !== "products" && prop !== "_id") {
                 const td = document.createElement("td");
                 td.innerText = ele[prop];
-                td.classList.add("table-data")
+                td.classList.add("table-data");
                 tr.appendChild(td);
             }
         }
         table.appendChild(tr);
     }
 
+    // append table and side divs to container
+    div.appendChild(table);
+
     // Add table to page
-    document.querySelector(".right-panel").innerHTML = "";
-    document.querySelector(".right-panel").appendChild(table);
+    document.querySelector(".right-panel").innerHTML = "<div></div>";
+    document.querySelector(".right-panel").appendChild(div);
+}
+
+const getSingleWarehouse = async (e) => {
+    const id = e.target.parentElement.getAttribute("data-id");
+    console.log(id);
 }
 
 // Call business function on window load
