@@ -13,6 +13,10 @@ main.interface {
     background-color: rgb(255, 176, 30);
 }
 
+.text-light {
+    color: #fff;
+}
+
 .bg-light-gray {
     background-color: #f0f0f0;
 }

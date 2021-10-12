@@ -146,7 +146,7 @@ const getAllWarehouses = async (e) => {
     createTable(fullWarehouseList);
 }
 
-// Create html table using warehouse list (wl)
+// Create html table using warehouse list or product list (wl)
 const createTable = (wl) => {
     // Container for whole table
     const div = document.createElement("div");
@@ -156,19 +156,26 @@ const createTable = (wl) => {
     const h2 = document.createElement("h2");
     h2.classList.add("text-center", "bg-orange");
     // Change text if warehouse or product
-    if (!isProductTable) h2.textContent = "Warehouses";
-    else h2.textContent = "Products";
+    if (!isProductTable) {
+        h2.textContent = "Warehouses";
+    }
+    else {
+        h2.textContent = "Products";
+    }
     div.appendChild(h2);
 
-    // flex container under header
-    const flexDiv = document.createElement("div");
-    flexDiv.classList.add("flex-std-c");
+    // Determine if wl is empty or notand if empty add table empty message
+    if (!wl.length) {
+        if (isProductTable) {
+            const msg = document.createElement("p");
+            msg.classList.add("text-center", "text-light");
+            msg.innerText = "No products";
 
-    // Divs for styling sides
-    const leftDiv = document.createElement("div");
-    const rightDiv = document.createElement("div");
-    leftDiv.classList.add("side-div", "left");
-    rightDiv.classList.add("side-div", "right");
+            div.appendChild(msg);
+            document.querySelector(".card-container").appendChild(div);
+            return
+        }
+    }
 
     // Create table element and headers
     const table = document.createElement("table");
@@ -276,6 +283,8 @@ const showWarehouseInfo = (wh) => {
 
     const whID = document.createElement("p");
     whID.textContent = `Warehouse ID: ${wh._id}`;
+    whID.setAttribute("id", "warehouse-id");
+    whID.setAttribute("data-id", wh._id);
 
     const numProducts = document.createElement("p");
     numProducts.textContent = `Number of Products: ${wh.numProducts}`;
