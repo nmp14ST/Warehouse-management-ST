@@ -22,7 +22,7 @@ router.get("/:name", async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-        const warehouse = await db.Warehouse.find({ company_name: req.params.name });
+        const warehouse = await db.Warehouse.find({ company_name: req.params.name }, "_id name company_name numProducts limit size");
 
         if (!warehouse) {
             throw { status: 404, message: "Cannot find that warehouse" };
