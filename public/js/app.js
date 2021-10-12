@@ -301,6 +301,8 @@ const showWarehouseInfo = (wh) => {
     const button = document.createElement("button");
     button.textContent = "Add product";
     button.setAttribute("data-id", wh._id);
+    // Add event listener for adding product
+    button.addEventListener("click", showProductForm);
     buttonDiv.appendChild(button);
 
     cardBody.appendChild(whID);
@@ -326,9 +328,84 @@ const showWarehouseInfo = (wh) => {
     rightPanelSection.innerHTML = "<div></div>";
     rightPanelSection.appendChild(cardContainer);
 
+    // Create form for adding products but give it a class of hidden at first and only display when add product button is clicked
+    createForm(cardContainer);
+
     // Create product list and mark it is for products instead of warehosues
     isProductTable = true;
     createTable(wh.products);
+}
+
+// Function for adding product to warehouse
+const showProductForm = (e) => {
+    e.preventDefault();
+
+    document.getElementById("product-form").classList.toggle("hidden");
+}
+
+// Create HTML form for adding product
+// Passes card container (cc) so we can easily append to page
+const createForm = (cc) => {
+    const form = document.createElement("form");
+    form.classList.add("hidden");
+    form.setAttribute("id", "product-form");
+
+    const formH2 = document.createElement("h2");
+    formH2.textContent = "Enter Product Information";
+    formH2.classList.add("text-center");
+    form.appendChild(formH2);
+
+    // Label and input for name
+    const labelName = document.createElement("label");
+    labelName.innerHTML = "Enter product name";
+    const inputName = document.createElement("input");
+    inputName.setAttribute("type", "text");
+    inputName.setAttribute("id", "product-name");
+
+    // Label and input for price
+    const labelPrice = document.createElement("label");
+    labelPrice.innerHTML = "Enter product price";
+    const inputPrice = document.createElement("input");
+    inputPrice.setAttribute("type", "number");
+    inputPrice.setAttribute("id", "product-price");
+
+    // Label and input for space
+    const labelSpace = document.createElement("label");
+    labelSpace.innerHTML = "Enter space product consumes";
+    const inputSpace = document.createElement("input");
+    inputSpace.setAttribute("type", "number");
+    inputSpace.setAttribute("id", "product-space");
+
+    // Label and input for description
+    const labelDesc = document.createElement("label");
+    labelDesc.innerHTML = "Enter description";
+    const inputDesc = document.createElement("input");
+    inputDesc.setAttribute("type", "textarea");
+    inputDesc.setAttribute("id", "product-desc");
+
+    // Button for form
+    const btnDiv = document.createElement("div");
+    const formBtn = document.createElement("button");
+    formBtn.textContent = "Submit";
+    formBtn.addEventListener("click", submitProductForm);
+    btnDiv.classList.add("flex-std-c", "align-center");
+    btnDiv.appendChild(formBtn);
+
+    form.appendChild(labelName);
+    form.appendChild(inputName);
+    form.appendChild(labelPrice);
+    form.appendChild(inputPrice);
+    form.appendChild(labelSpace);
+    form.appendChild(inputSpace);
+    form.appendChild(labelDesc);
+    form.appendChild(inputDesc);
+    form.appendChild(btnDiv);
+
+    cc.appendChild(form);
+}
+
+const submitProductForm = (e) => {
+    e.preventDefault();
 }
 
 // Call business function on window load
