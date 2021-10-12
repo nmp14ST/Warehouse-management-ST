@@ -1,12 +1,5 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema({
-    name: String,
-    price: Number,
-    space: Number,
-    description: String
-});
-
 const warehouseSchema = mongoose.Schema({
     name: String,
     company_name: {
@@ -23,7 +16,7 @@ const warehouseSchema = mongoose.Schema({
         required: true,
         default: 0
     },
-    products: [productSchema]
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
 });
 
 const Warehouse = mongoose.model("Warehouse", warehouseSchema);
