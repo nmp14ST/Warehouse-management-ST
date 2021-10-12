@@ -4,8 +4,26 @@ main.interface {
     top: 78px;
 }
 
+.container {
+    width: 100%;
+    min-height: 100vh;
+}
+
 .bg-orange {
     background-color: rgb(255, 176, 30);
+}
+
+.bg-light-gray {
+    background-color: #f0f0f0;
+}
+
+.bg-linear-0-5 {
+    background: linear-gradient(to bottom right, #000 16%, 75%, #777);
+}
+
+button.shift-button {
+    transform: translate(3px, 3px);
+    box-shadow: none;
 }
 
 .left-nav, .right-panel, .open-left-button {
@@ -107,6 +125,12 @@ main.interface {
     width: calc(100% - 4px) !important;
     overflow: scroll !important;
     padding: 0;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+.right-panel::-webkit-scrollbar { 
+    display: none;
 }
 
 .right-panel.closed-left {
@@ -130,6 +154,7 @@ main.interface {
     position: relative;
     left: 70px !important;
     width: calc(100vw - 216.7px) !important;
+    margin: 0;
 }
 
 .right-panel.closed-left > ul {
@@ -305,6 +330,71 @@ table.warehouse-data .header-row {
 .table-data {
     border-right: 1px solid #000;
     padding-left: 6px;
+}
+
+/* End panel table for warehouses */
+
+/* Right panel card for single warehouse */
+.right-panel .card-container {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-panel .card-container .card {
+    max-width: 680px;
+    margin: 100px 0 26px 0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #000;
+    background: linear-gradient(to right, rgb(252, 117, 8) , yellow, green, cyan, blue, violet);
+    padding: 16px;
+}
+
+.right-panel .card-container .card > .card-header {
+    position: relative;
+    padding: 6px 10px 26px 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.right-panel .card-container .card > .card-header .card-image {
+    position: absolute;
+    width: 84px;
+    bottom: -42px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+}
+
+.right-panel .card-container .card .card-body {
+    padding: 32px 15px 12px 15px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.right-panel .card-container .card .card-body button {
+    position: relative;
+    background: teal;
+    color: #f0f0f0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #7a7a7a;
+    box-shadow: 3px 3px 2px 1px #222;
+}
+
+.right-panel .card-container .card .card-body button:hover {
+    background: #5930ff;
+}
+
+.right-panel .card-container .card .card-body button:active {
+    box-shadow: none;
 }
 
 @media only screen and (max-width: 1276px) {
