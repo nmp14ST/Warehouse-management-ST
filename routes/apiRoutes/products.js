@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { addProductToWarehouse } = require("../../controllers/Products");
+const { addProductToWarehouse, deleteProductFromWarehouse } = require("../../controllers/Products");
 
 router.get("/", (req, res) => {
     try {
@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
     }
 });
 
+// Create new product and add to warehouse
 router.post("/:warehouseID", async (req, res) => {
     try {
         const whProduct = await addProductToWarehouse(req.body, req.params.warehouseID);
@@ -19,5 +20,18 @@ router.post("/:warehouseID", async (req, res) => {
         console.error(err);
     }
 });
+
+// Delete product and remove from warehouse
+router.delete("/:warehouseID/:productID", async (req, res) => {
+    try {
+
+        const msg = await deleteProductFromWarehouse(req.params.warehouseID, req.params.productID);
+
+        res.status(200).json(msg);
+    } catch (err) {
+        res.status(err.status ?? 500).json(err);
+        console.error(err);
+    }
+})
 
 module.exports = router;
