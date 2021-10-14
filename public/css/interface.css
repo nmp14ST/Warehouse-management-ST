@@ -40,7 +40,7 @@ button.shift-button {
 
 /* Left nav styling */
 .left-nav {
-    position: absolute;
+    position: fixed;
     background: #ddd;
     box-shadow: 0 0 10px #000;
     z-index: 3;
@@ -331,7 +331,6 @@ table.warehouse-data .header-row {
     width: 100%;
     right: 0;
     cursor: pointer;
-    word-break: break-all;
 }
 .row:nth-child(odd) {
     background-color: #dddddd;
@@ -458,8 +457,9 @@ table.warehouse-data .header-row {
 
 .card-container td.flex-td {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding-left: 8px;
 }
 
 /* Trash can on product table rows */
