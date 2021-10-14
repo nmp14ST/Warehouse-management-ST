@@ -7,6 +7,8 @@ let fullWarehouseList = [];
 let cached = false;
 let data;
 
+// TODO: Take fetch requests and condense into one reuable function and pass the query route and query values as arguments
+
 // Boolean to determine if building tables for warehouses or products
 let isProductTable = false;
 
@@ -164,22 +166,24 @@ const createTable = (wl) => {
     }
     div.appendChild(h2);
 
-    // Determine if wl is empty or notand if empty add table empty message
+    const table = document.createElement("table");
+    table.classList.add("warehouse-data");
+
+    // Determine if wl is empty or not and if empty add table empty message
     if (!wl.length) {
         if (isProductTable) {
             const msg = document.createElement("p");
-            msg.classList.add("text-center", "text-light");
+            msg.classList.add("text-center", "text-light", "no-products-msg");
             msg.innerText = "No products";
 
             div.appendChild(msg);
             document.querySelector(".card-container").appendChild(div);
+            div.appendChild(table);
             return
         }
     }
 
     // Create table element and headers
-    const table = document.createElement("table");
-    table.classList.add("warehouse-data");
     const headerRow = document.createElement("tr");
     headerRow.classList.add("header-row", "row");
 
@@ -200,7 +204,9 @@ const createTable = (wl) => {
         tr.setAttribute("data-id", ele._id);
 
         // Give event listener for querying specific warehouse selected
-        tr.addEventListener("click", getSingleWarehouse);
+        if (!isProductTable) {
+            tr.addEventListener("click", getSingleWarehouse);
+        }
 
         for (const prop in ele) {
             if (prop !== "__v" && prop !== "products" && prop !== "_id") {
@@ -287,12 +293,14 @@ const showWarehouseInfo = (wh) => {
     whID.setAttribute("data-id", wh._id);
 
     const numProducts = document.createElement("p");
+    numProducts.setAttribute("id", "whProductCount");
     numProducts.textContent = `Number of Products: ${wh.numProducts}`;
 
     const limit = document.createElement("p");
     limit.textContent = `Warehouse Maximum Capacity: ${wh.limit}`;
 
     const size = document.createElement("p");
+    size.setAttribute("id", "whSize");
     size.textContent = `Current Capacity: ${wh.size}`;
 
     // Button for getting products
@@ -301,6 +309,8 @@ const showWarehouseInfo = (wh) => {
     const button = document.createElement("button");
     button.textContent = "Add product";
     button.setAttribute("data-id", wh._id);
+    // Add event listener for adding product
+    button.addEventListener("click", showProductForm);
     buttonDiv.appendChild(button);
 
     cardBody.appendChild(whID);
@@ -326,9 +336,180 @@ const showWarehouseInfo = (wh) => {
     rightPanelSection.innerHTML = "<div></div>";
     rightPanelSection.appendChild(cardContainer);
 
+    // Create form for adding products but give it a class of hidden at first and only display when add product button is clicked
+    createForm(cardContainer);
+
     // Create product list and mark it is for products instead of warehosues
     isProductTable = true;
     createTable(wh.products);
+}
+
+// Function for adding product to warehouse
+const showProductForm = (e) => {
+    e.preventDefault();
+
+    document.getElementById("product-form").classList.toggle("hidden");
+}
+
+// Create HTML form for adding product
+// Passes card container (cc) so we can easily append to page
+const createForm = (cc) => {
+    const form = document.createElement("form");
+    form.classList.add("hidden");
+    form.setAttribute("id", "product-form");
+
+    const formH2 = document.createElement("h2");
+    formH2.textContent = "Enter Product Information";
+    formH2.classList.add("text-center");
+    form.appendChild(formH2);
+
+    // Label and input for name
+    const labelName = document.createElement("label");
+    labelName.innerHTML = "Enter product name";
+    const inputName = document.createElement("input");
+    inputName.setAttribute("type", "text");
+    inputName.setAttribute("id", "product-name");
+
+    // Label and input for price
+    const labelPrice = document.createElement("label");
+    labelPrice.innerHTML = "Enter product price";
+    const inputPrice = document.createElement("input");
+    inputPrice.setAttribute("type", "number");
+    inputPrice.setAttribute("id", "product-price");
+
+    // Label and input for space
+    const labelSpace = document.createElement("label");
+    labelSpace.innerHTML = "Enter space product consumes";
+    const inputSpace = document.createElement("input");
+    inputSpace.setAttribute("type", "number");
+    inputSpace.setAttribute("id", "product-space");
+
+    // Label and input for description
+    const labelDesc = document.createElement("label");
+    labelDesc.innerHTML = "Enter description";
+    const inputDesc = document.createElement("input");
+    inputDesc.setAttribute("type", "textarea");
+    inputDesc.setAttribute("id", "product-desc");
+
+    // Button for form
+    const btnDiv = document.createElement("div");
+    const formBtn = document.createElement("button");
+    formBtn.textContent = "Submit";
+    formBtn.addEventListener("click", submitProductForm);
+    btnDiv.classList.add("flex-std-c", "align-center");
+    // Add event listener for animation to button
+    formBtn.addEventListener("mousedown", () => {
+        formBtn.classList.add("shift-button");
+    });
+    formBtn.addEventListener("mouseup", () => {
+        formBtn.classList.remove("shift-button");
+    });
+    btnDiv.appendChild(formBtn);
+
+    form.appendChild(labelName);
+    form.appendChild(inputName);
+    form.appendChild(labelPrice);
+    form.appendChild(inputPrice);
+    form.appendChild(labelSpace);
+    form.appendChild(inputSpace);
+    form.appendChild(labelDesc);
+    form.appendChild(inputDesc);
+    form.appendChild(btnDiv);
+
+    cc.appendChild(form);
+}
+
+const submitProductForm = async (e) => {
+    e.preventDefault();
+
+    const whID = document.getElementById("warehouse-id").getAttribute("data-id");
+
+    const name = document.getElementById("product-name").value;
+    const price = document.getElementById("product-price").value;
+    const space = document.getElementById("product-space").value;
+    const description = document.getElementById("product-desc").value;
+
+    const sizeEle = document.getElementById("whSize");
+    let whSize = sizeEle.textContent.split(" ");
+    whSize = parseInt(whSize[whSize.length - 1]);
+
+    const body = {
+        name,
+        price,
+        space,
+        description,
+    }
+
+    const response = await fetch(`/api/products/${whID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+
+    if (response.status !== 200) {
+        console.log(response);
+        const data = await response.json();
+
+        // Create and append error message to form
+        // If error message already exists, dont create new one
+        if (!document.getElementById("addProductError")) {
+            const p = document.createElement("p");
+            p.classList.add("error", "text-center");
+            p.setAttribute("id", "addProductError");
+            p.innerText = data.message;
+
+            document.getElementById("product-form").appendChild(p);
+        }
+
+        return;
+    }
+
+    const data = await response.json();
+
+    // Create table entry for new product
+    const tr = document.createElement("tr");
+    tr.setAttribute("data-id", data._id);
+    tr.classList.add("row");
+    for (const prop in body) {
+        const td = document.createElement("td");
+        td.classList.add("table-data");
+        td.textContent = body[prop];
+        tr.appendChild(td);
+    }
+
+    // If table doesnt exist with header and data yet, add it
+    if (!document.querySelector(".header-row")) {
+        const headerRow = document.createElement("tr");
+        headerRow.classList.add("header-row", "row");
+
+        for (const prop in data) {
+            if (prop !== "__v" && prop !== "products" && prop !== "_id") {
+                const header = document.createElement("th");
+                header.innerText = prop;
+                headerRow.appendChild(header);
+            }
+        }
+
+        document.querySelector(".warehouse-data").appendChild(headerRow);
+    }
+
+    document.querySelector(".warehouse-data").appendChild(tr);
+
+    if (document.querySelector(".no-products-msg")) {
+        document.querySelector(".no-products-msg").remove();
+    }
+
+    // Change card values to represent changes
+    const numProductsEle = document.getElementById("whProductCount");
+    let numProducts = numProductsEle.textContent.split(" ");
+    numProducts = parseInt(numProducts[numProducts.length - 1]);
+    numProducts++;
+    numProductsEle.textContent = `Number of Products: ${numProducts}`;
+
+    let size = sizeEle.textContent.split(" ");
+    size = parseInt(size[size.length - 1]);
+    size += parseInt(space);
+    sizeEle.textContent = `Current Capacity: ${size}`;
 }
 
 // Call business function on window load

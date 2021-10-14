@@ -4,6 +4,10 @@ main.interface {
     top: 78px;
 }
 
+.hidden {display: none;}
+
+.error {color: crimson;}
+
 .container {
     width: 100%;
     min-height: 100vh;
@@ -280,7 +284,6 @@ button.shift-button {
 div.table-container {
     width: 100%;
     margin: 0 auto;
-    min-height: calc(100vh - 78px);
 }
 
 .table-container div {
@@ -300,6 +303,7 @@ div.table-container {
     padding: 0 12px;
     border-collapse: collapse;
     position: relative;
+    background: #fff;
 }
 
 .right-panel table.warehouse-data::before,
@@ -343,14 +347,13 @@ table.warehouse-data .header-row {
     width: 100%;
     min-height: calc(100vh - 80px);
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
 .right-panel .card-container .card {
     max-width: 680px;
-    margin: 100px 0 26px 0;
+    margin: 100px 0 16px 0;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     border-bottom-left-radius: 8px;
@@ -401,6 +404,58 @@ table.warehouse-data .header-row {
     box-shadow: none;
 }
 
+/* Product form */
+.card-container #product-form {
+    background: #fff;
+    width: 85%;
+    max-width: 700px;
+    padding: 10px 12px;
+    margin: 16px 0;
+    border-radius: 10px;
+}
+.card-container #product-form input,
+.card-container #product-form label {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.card-container #product-form input {
+    margin-bottom: 12px;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+.card-container #product-form label {
+    margin-bottom: 4px;
+}
+
+.card-container #product-form button {
+    padding: 8px 10px;
+    border-radius: 6px;
+    background:teal;
+    color: #fff;
+    border: 1px solid #7a7a7a;
+    box-shadow: 3px 3px 2px 1px #222;
+}
+
+.card-container #product-form button:hover {
+    background: #5930ff;
+}
+
+.card-container #product-form button:active {
+    box-shadow: none;
+}
+
+.card-container td {
+    text-align: center;
+}
+
+.card-container .table-container > h2 {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* End right panel product cards */
 @media only screen and (max-width: 1276px) {
     .right-panel table.warehouse-data::before,
     .right-panel table.warehouse-data::after {

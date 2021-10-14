@@ -42,7 +42,7 @@ router.get("/single/:id", async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-        const warehouse = await db.Warehouse.findOne({ _id: req.params.id });
+        const warehouse = await (await db.Warehouse.findOne({ _id: req.params.id })).populate("products");
 
         if (!warehouse) throw { status: 404, message: `Could not find the warehouse with the id ${req.params.id}` }
 
