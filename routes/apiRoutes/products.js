@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { addProductToWarehouse, deleteProductFromWarehouse } = require("../../controllers/Products");
+const { addProductToWarehouse, deleteProductFromWarehouse, updateProduct } = require("../../controllers/Products");
 
 router.get("/", (req, res) => {
     try {
@@ -32,6 +32,18 @@ router.delete("/:warehouseID/:productID", async (req, res) => {
         res.status(err.status ?? 500).json(err);
         console.error(err);
     }
-})
+});
+
+// Update product
+router.put("/:id", async (req, res) => {
+    try {
+        await updateProduct(req.body, req.params.id);
+
+        res.status(200).json();
+    } catch (err) {
+        res.status(err.status ?? 500).json(err);
+        console.error(err);
+    }
+});
 
 module.exports = router;

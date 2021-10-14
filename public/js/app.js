@@ -216,15 +216,9 @@ const createTable = (wl) => {
             }
         }
 
-        // If product table, create trash can icon so user can delete product
+        // If product table, create trash can icon so user can delete product and edit button
         if (isProductTable) {
-            const i = document.createElement("i");
-            i.classList.add("fas", "fa-trash");
-            i.setAttribute("data-id", ele._id);
-            i.addEventListener("click", deleteProduct);
-
-            tr.lastElementChild.appendChild(i);
-            tr.lastElementChild.classList.add("flex-td");
+            createDeleteAndEditButtons(tr, ele);
         }
         table.appendChild(tr);
     }
@@ -239,6 +233,26 @@ const createTable = (wl) => {
     } else {
         document.querySelector(".card-container").appendChild(div);
     }
+}
+
+// Function to add edit and delete buttons to product form
+const createDeleteAndEditButtons = (tr, ele) => {
+    const span = document.createElement("span");
+
+    const i = document.createElement("i");
+    i.classList.add("fas", "fa-trash");
+    i.setAttribute("data-id", ele._id);
+    i.addEventListener("click", deleteProduct);
+
+    const editI = document.createElement("i");
+    editI.classList.add("fas", "fa-edit");
+    editI.setAttribute("data-id", ele._id);
+    editI.addEventListener("click", editProduct);
+
+    span.appendChild(i);
+    span.appendChild(editI);
+    tr.lastElementChild.appendChild(span);
+    tr.lastElementChild.classList.add("flex-td");
 }
 
 //  Get warehouse and show user options
@@ -363,7 +377,7 @@ const showProductForm = (e) => {
 
 // Create HTML form for adding product
 // Passes card container (cc) so we can easily append to page
-const createForm = (cc) => {
+const createForm = (cc, edit = false) => {
     const form = document.createElement("form");
     form.classList.add("hidden");
     form.setAttribute("id", "product-form");
@@ -405,7 +419,14 @@ const createForm = (cc) => {
     const btnDiv = document.createElement("div");
     const formBtn = document.createElement("button");
     formBtn.textContent = "Submit";
-    formBtn.addEventListener("click", submitProductForm);
+
+    // If not editing (submititng new product) call submit product form with event listener. else call edit product form
+    if (!edit) {
+        formBtn.addEventListener("click", submitProductForm);
+    } else {
+        formBtn.addEventListener("click", editProductForm);
+    }
+
     btnDiv.classList.add("flex-std-c", "align-center");
     // Add event listener for animation to button
     formBtn.addEventListener("mousedown", () => {
@@ -420,8 +441,13 @@ const createForm = (cc) => {
     form.appendChild(inputName);
     form.appendChild(labelPrice);
     form.appendChild(inputPrice);
-    form.appendChild(labelSpace);
-    form.appendChild(inputSpace);
+
+    // Only add ability to edit space to creating product
+    if (!edit) {
+        form.appendChild(labelSpace);
+        form.appendChild(inputSpace);
+    }
+
     form.appendChild(labelDesc);
     form.appendChild(inputDesc);
     form.appendChild(btnDiv);
@@ -432,12 +458,15 @@ const createForm = (cc) => {
 const submitProductForm = async (e) => {
     e.preventDefault();
 
-    const whID = document.getElementById("warehouse-id").getAttribute("data-id");
+    let whID;
+    if (document.getElementById("warehouse-id")) {
+        whID = document.getElementById("warehouse-id").getAttribute("data-id");
+    }
 
-    const name = document.getElementById("product-name").value;
-    const price = document.getElementById("product-price").value;
-    const space = document.getElementById("product-space").value;
-    const description = document.getElementById("product-desc").value;
+    const name = document.getElementById("product-name").value.trim();;
+    const price = document.getElementById("product-price").value.trim();;
+    const space = document.getElementById("product-space").value.trim();;
+    const description = document.getElementById("product-desc").value.trim();;
 
     const sizeEle = document.getElementById("whSize");
     let whSize = sizeEle.textContent.split(" ");
@@ -486,14 +515,10 @@ const submitProductForm = async (e) => {
         tr.appendChild(td);
     }
 
-    // Add trash can icon for deleting
-    const i = document.createElement("i");
-    i.classList.add("fas", "fa-trash");
-    i.setAttribute("data-id", data._id);
-    i.addEventListener("click", deleteProduct);
+    const span = document.createElement("span");
 
-    tr.lastElementChild.appendChild(i);
-    tr.lastElementChild.classList.add("flex-td");
+    // Add delete and edit buttons
+    createDeleteAndEditButtons(tr, data);
 
     // If table doesnt exist with header and data yet, add it
     if (!document.querySelector(".header-row")) {
@@ -540,7 +565,8 @@ const deleteProduct = async (e) => {
 
     const data = await response.json();
 
-    e.target.parentElement.parentElement.remove();
+    // e,target is the trash can. Delete the node for the whole table row which is 3 levels up
+    e.target.parentElement.parentElement.parentElement.remove();
     // Update html for warehouse card
     updateCardHtml(data.space, false)
 }
@@ -563,6 +589,59 @@ const updateCardHtml = (space, isIncProducts) => {
     if (isIncProducts) size += parseInt(space);
     if (!isIncProducts) size -= parseInt(space);
     sizeEle.textContent = `Current Capacity: ${size}`;
+}
+
+// Remove html for cards and create form for editting product
+const editProduct = (e) => {
+    e.preventDefault();
+
+    const ID = e.target.getAttribute("data-id");
+
+    document.querySelector(".card-container").remove();
+
+    // new container for editting
+    const div = document.createElement("div");
+    div.classList.add("edit-form-container");
+
+    // Create form for editing product
+    createForm(div, true);
+    rightPanelSection.appendChild(div);
+    // Remove default hidden class from form
+    document.getElementById("product-form").classList.remove("hidden");
+    rightPanelSection.querySelector("button").setAttribute("data-id", ID);
+}
+
+// Fetch request to edit product
+const editProductForm = async (e) => {
+    e.preventDefault();
+
+    const ID = e.target.getAttribute("data-id");
+
+    const body = {
+        name: document.getElementById("product-name").value.trim(),
+        price: document.getElementById("product-price").value.trim(),
+        description: document.getElementById("product-desc").value.trim()
+    }
+
+    const reponse = await fetch(`api/products/${ID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+
+    if (reponse.status !== 200) {
+        if (!document.getElementById("addProductError")) {
+            const p = document.createElement("p");
+            p.classList.add("error", "text-center");
+            p.setAttribute("id", "addProductError");
+            p.innerText = data.message;
+
+            document.getElementById("product-form").appendChild(p);
+        }
+        return
+    }
+
+    appendBusinesses();
 }
 
 // Call business function on window load

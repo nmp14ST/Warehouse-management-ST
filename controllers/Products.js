@@ -69,4 +69,19 @@ const deleteProductFromWarehouse = async (whID, pID) => {
     }
 }
 
-module.exports = { addProductToWarehouse, deleteProductFromWarehouse };
+// Edit product info
+const updateProduct = async (productInfo, id) => {
+    try {
+        await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+        const pd = await db.Product.findOneAndUpdate({ _id: id }, productInfo);
+        if (!pd) throw { status: 404, message: "Product not found" };
+
+        mongoose.connection.close();
+    } catch (err) {
+        mongoose.connection.close();
+        throw err;
+    }
+}
+
+module.exports = { addProductToWarehouse, deleteProductFromWarehouse, updateProduct };
