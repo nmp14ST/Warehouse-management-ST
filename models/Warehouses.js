@@ -10,11 +10,20 @@ const warehouseSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    limit: Number,
+    limit: {
+        type: Number,
+        required: true
+    },
     size: {
         type: Number,
         required: true,
-        default: 0
+        default: 0,
+        validate: {
+            validator: function (v) {
+                return v <= this.limit;
+            },
+            message: () => `Warehouse limit exceeded`
+        },
     },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
 });
