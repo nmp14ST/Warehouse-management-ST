@@ -353,7 +353,8 @@ table.warehouse-data .header-row {
 }
 
 .right-panel .card-container .card {
-    max-width: 680px;
+    max-width: 700px;
+    width: 100%;
     margin: 100px 0 16px 0;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -408,7 +409,7 @@ table.warehouse-data .header-row {
 /* Product form */
 .card-container #product-form {
     background: #fff;
-    width: 85%;
+    width: 100%;
     max-width: 700px;
     padding: 10px 12px;
     margin: 16px 0;
