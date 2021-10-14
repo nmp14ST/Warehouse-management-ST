@@ -565,7 +565,8 @@ const deleteProduct = async (e) => {
 
     const data = await response.json();
 
-    e.target.parentElement.parentElement.remove();
+    // e,target is the trash can. Delete the node for the whole table row which is 3 levels up
+    e.target.parentElement.parentElement.parentElement.remove();
     // Update html for warehouse card
     updateCardHtml(data.space, false)
 }
