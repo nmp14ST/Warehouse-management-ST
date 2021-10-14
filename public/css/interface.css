@@ -331,13 +331,15 @@ table.warehouse-data .header-row {
     width: 100%;
     right: 0;
     cursor: pointer;
+    word-break: break-all;
 }
 .row:nth-child(odd) {
     background-color: #dddddd;
 }
 .table-data {
     border-right: 1px solid #000;
-    padding-left: 6px;
+    padding: 4px 8px;
+    min-width: 120px;
 }
 
 /* End panel table for warehouses */
@@ -446,8 +448,26 @@ table.warehouse-data .header-row {
     box-shadow: none;
 }
 
+.card-container .row {
+    cursor: initial;
+}
+
 .card-container td {
     text-align: center;
+}
+
+.card-container td.flex-td {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Trash can on product table rows */
+.card-container td.flex-td i {
+    padding: 0 12px;
+    color: crimson;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .card-container .table-container > h2 {

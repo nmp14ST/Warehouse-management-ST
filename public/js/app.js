@@ -216,6 +216,16 @@ const createTable = (wl) => {
                 tr.appendChild(td);
             }
         }
+
+        // If product table, create trash can icon so user can delete product
+        if (isProductTable) {
+            const i = document.createElement("i");
+            i.classList.add("fas", "fa-trash");
+            i.addEventListener("click", deleteProduct);
+
+            tr.lastElementChild.appendChild(i);
+            tr.lastElementChild.classList.add("flex-td");
+        }
         table.appendChild(tr);
     }
 
@@ -510,6 +520,10 @@ const submitProductForm = async (e) => {
     size = parseInt(size[size.length - 1]);
     size += parseInt(space);
     sizeEle.textContent = `Current Capacity: ${size}`;
+}
+
+const deleteProduct = async (e) => {
+    e.preventDefault();
 }
 
 // Call business function on window load
