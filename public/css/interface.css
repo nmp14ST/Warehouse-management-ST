@@ -4,7 +4,7 @@ main.interface {
     top: 78px;
 }
 
-.hidden {display: none;}
+.hidden {display: none !important;}
 
 .error {color: crimson;}
 
@@ -344,7 +344,8 @@ table.warehouse-data .header-row {
 /* End panel table for warehouses */
 
 /* Right panel card for single warehouse */
-.right-panel .card-container {
+.right-panel .card-container,
+.right-panel .edit-form-container {
     width: 100%;
     min-height: calc(100vh - 80px);
     display: flex;
@@ -407,7 +408,8 @@ table.warehouse-data .header-row {
 }
 
 /* Product form */
-.card-container #product-form {
+.card-container #product-form,
+.edit-form-container #product-form {
     background: #fff;
     width: 100%;
     max-width: 700px;
@@ -416,7 +418,9 @@ table.warehouse-data .header-row {
     border-radius: 10px;
 }
 .card-container #product-form input,
-.card-container #product-form label {
+.card-container #product-form label,
+.edit-form-container #product-form label,
+.edit-form-container #product-form input {
     display: block;
     width: 90%;
     margin: 0 auto;
@@ -444,7 +448,8 @@ table.warehouse-data .header-row {
     background: #5930ff;
 }
 
-.card-container #product-form button:active {
+.card-container #product-form button:active,
+.edit-form-container button:active {
     box-shadow: none;
 }
 
@@ -477,6 +482,48 @@ table.warehouse-data .header-row {
 }
 
 /* End right panel product cards */
+
+/* right panel edit form */
+.edit-form-container {
+    background: linear-gradient(to bottom right, rgb(120, 150, 252) 25%, 50%, rgb(79, 119, 129) 75%) !important;
+    justify-content: center;
+}
+
+.edit-form-container h2 {
+    position: relative;
+}
+.edit-form-container h2::before {
+    content: "";
+    position: absolute;
+    left: 40px;
+    width: 4px;
+    height: 100%;
+    background: #5930ff;
+}
+
+.edit-form-container label {
+    margin-bottom: 4px !important;
+}
+.edit-form-container input {
+    margin-bottom: 12px !important;
+    padding: 8px 10px;
+}
+.edit-form-container button {
+    padding: 8px 12px !important;
+    font-size: 16px;
+    background: #5930ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 4px 4px 2px #000;
+}
+
+.edit-form-container button:hover {
+    background: linear-gradient(to right, rgb(194, 255, 255), rgb(183, 0, 255));
+    color: #000;
+}
+
+/* end right panel edit form */
 @media only screen and (max-width: 1276px) {
     .right-panel table.warehouse-data::before,
     .right-panel table.warehouse-data::after {
