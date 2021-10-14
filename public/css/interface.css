@@ -6,6 +6,8 @@ main.interface {
 
 .hidden {display: none;}
 
+.error {color: crimson;}
+
 .container {
     width: 100%;
     min-height: 100vh;
@@ -301,6 +303,7 @@ div.table-container {
     padding: 0 12px;
     border-collapse: collapse;
     position: relative;
+    background: #fff;
 }
 
 .right-panel table.warehouse-data::before,
@@ -424,6 +427,32 @@ table.warehouse-data .header-row {
 }
 .card-container #product-form label {
     margin-bottom: 4px;
+}
+
+.card-container #product-form button {
+    padding: 8px 10px;
+    border-radius: 6px;
+    background:teal;
+    color: #fff;
+    border: 1px solid #7a7a7a;
+    box-shadow: 3px 3px 2px 1px #222;
+}
+
+.card-container #product-form button:hover {
+    background: #5930ff;
+}
+
+.card-container #product-form button:active {
+    box-shadow: none;
+}
+
+.card-container td {
+    text-align: center;
+}
+
+.card-container .table-container > h2 {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* End right panel product cards */
