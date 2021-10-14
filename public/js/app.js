@@ -66,12 +66,11 @@ const getDetails = (details) => {
 };
 
 // Get businessses, add to html, and add event listener for getting warehouses specific to that company
-const appendBusinesses = async (e) => {
-    // If button click to get business, prevent default
-    e ? e.preventDefault() : null;
-    // Get businesses from db
-    data = await getBusinesses();
-
+const appendBusinesses = async () => {
+    // Get businesses from db if not already obtained
+    if (!cached) {
+        data = await getBusinesses();
+    }
     // Create html tree from data and if not cached (already build array for tree) add </ul> to end of list
     createList(data);
     if (!cached) {
@@ -215,6 +214,17 @@ const createTable = (wl) => {
                 td.classList.add("table-data");
                 tr.appendChild(td);
             }
+        }
+
+        // If product table, create trash can icon so user can delete product
+        if (isProductTable) {
+            const i = document.createElement("i");
+            i.classList.add("fas", "fa-trash");
+            i.setAttribute("data-id", ele._id);
+            i.addEventListener("click", deleteProduct);
+
+            tr.lastElementChild.appendChild(i);
+            tr.lastElementChild.classList.add("flex-td");
         }
         table.appendChild(tr);
     }
@@ -468,7 +478,6 @@ const submitProductForm = async (e) => {
 
     // Create table entry for new product
     const tr = document.createElement("tr");
-    tr.setAttribute("data-id", data._id);
     tr.classList.add("row");
     for (const prop in body) {
         const td = document.createElement("td");
@@ -476,6 +485,15 @@ const submitProductForm = async (e) => {
         td.textContent = body[prop];
         tr.appendChild(td);
     }
+
+    // Add trash can icon for deleting
+    const i = document.createElement("i");
+    i.classList.add("fas", "fa-trash");
+    i.setAttribute("data-id", data._id);
+    i.addEventListener("click", deleteProduct);
+
+    tr.lastElementChild.appendChild(i);
+    tr.lastElementChild.classList.add("flex-td");
 
     // If table doesnt exist with header and data yet, add it
     if (!document.querySelector(".header-row")) {
@@ -500,15 +518,50 @@ const submitProductForm = async (e) => {
     }
 
     // Change card values to represent changes
+    updateCardHtml(space, true);
+}
+
+const deleteProduct = async (e) => {
+    e.preventDefault();
+
+    const id = e.target.getAttribute("data-id");
+    const whID = document.getElementById("warehouse-id").getAttribute("data-id");
+
+    const response = await fetch(`/api/products/${whID}/${id}`, {
+        method: "DELETE"
+    });
+
+    console.log(response.status);
+
+    if (response.status > 200) {
+        // Do later
+        return
+    }
+
+    const data = await response.json();
+
+    e.target.parentElement.parentElement.remove();
+    // Update html for warehouse card
+    updateCardHtml(data.space, false)
+}
+
+const updateCardHtml = (space, isIncProducts) => {
+    // Update product count on card
     const numProductsEle = document.getElementById("whProductCount");
     let numProducts = numProductsEle.textContent.split(" ");
     numProducts = parseInt(numProducts[numProducts.length - 1]);
-    numProducts++;
+    // If incrementing products, increase product count else decrease
+    if (isIncProducts) numProducts++;
+    if (!isIncProducts) numProducts--;
     numProductsEle.textContent = `Number of Products: ${numProducts}`;
 
+    // Update current capacity of warehouse on card.
+    const sizeEle = document.getElementById("whSize");
     let size = sizeEle.textContent.split(" ");
     size = parseInt(size[size.length - 1]);
-    size += parseInt(space);
+    // If incrementing products, add product size to warehosue capacity. Else reduce capacity
+    if (isIncProducts) size += parseInt(space);
+    if (!isIncProducts) size -= parseInt(space);
     sizeEle.textContent = `Current Capacity: ${size}`;
 }
 

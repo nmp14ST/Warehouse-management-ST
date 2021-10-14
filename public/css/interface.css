@@ -40,7 +40,7 @@ button.shift-button {
 
 /* Left nav styling */
 .left-nav {
-    position: absolute;
+    position: fixed;
     background: #ddd;
     box-shadow: 0 0 10px #000;
     z-index: 3;
@@ -337,7 +337,8 @@ table.warehouse-data .header-row {
 }
 .table-data {
     border-right: 1px solid #000;
-    padding-left: 6px;
+    padding: 4px 8px;
+    min-width: 120px;
 }
 
 /* End panel table for warehouses */
@@ -446,8 +447,27 @@ table.warehouse-data .header-row {
     box-shadow: none;
 }
 
+.card-container .row {
+    cursor: initial;
+}
+
 .card-container td {
     text-align: center;
+}
+
+.card-container td.flex-td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 8px;
+}
+
+/* Trash can on product table rows */
+.card-container td.flex-td i {
+    padding: 0 12px;
+    color: crimson;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .card-container .table-container > h2 {
