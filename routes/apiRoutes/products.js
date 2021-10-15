@@ -1,16 +1,9 @@
 const router = require("express").Router();
 const { addProductToWarehouse, deleteProductFromWarehouse, updateProduct } = require("../../controllers/Products");
-
-router.get("/", (req, res) => {
-    try {
-        res.status(200).json({ data: "Some data" });
-    } catch (err) {
-        console.error(err);
-    }
-});
+const { isAuth, isUpdater } = require("../../utils");
 
 // Create new product and add to warehouse
-router.post("/:warehouseID", async (req, res) => {
+router.post("/:warehouseID", isAuth, isUpdater, async (req, res) => {
     try {
         const whProduct = await addProductToWarehouse(req.body, req.params.warehouseID);
 
@@ -22,9 +15,8 @@ router.post("/:warehouseID", async (req, res) => {
 });
 
 // Delete product and remove from warehouse
-router.delete("/:warehouseID/:productID", async (req, res) => {
+router.delete("/:warehouseID/:productID", isAuth, isUpdater, async (req, res) => {
     try {
-
         const msg = await deleteProductFromWarehouse(req.params.warehouseID, req.params.productID);
 
         res.status(200).json(msg);
@@ -35,7 +27,7 @@ router.delete("/:warehouseID/:productID", async (req, res) => {
 });
 
 // Update product
-router.put("/:id", async (req, res) => {
+router.put("/:id", isAuth, isUpdater, async (req, res) => {
     try {
         await updateProduct(req.body, req.params.id);
 
