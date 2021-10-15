@@ -11,11 +11,14 @@ const seed = async () => {
     const business = new db.Business(companySeeds);
 
     await business.save();
-    console.log("\n\n Business seeds run \n\n");
+    console.log("\n Business seeds run \n");
+
+    await db.Product.remove({});
+    console.log("\n Cleared products \n");
 
     await db.Warehouse.remove({});
     const warehouses = await db.Warehouse.insertMany(warehouseSeeds)
-        .then(() => console.log("\n\n warehouse seeds run"))
+        .then(() => console.log("\n warehouse seeds run\n"))
         .catch((err) => console.log("\n" + err + "\n"));
 
     mongoose.connection.close();
