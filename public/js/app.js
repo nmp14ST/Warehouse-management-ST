@@ -2,6 +2,9 @@ const businessesBtn = document.getElementById("businesses");
 const warehousesBtn = document.getElementById("warehouses");
 const rightPanelSection = document.querySelector(".right-panel");
 
+// User for authentication
+const userAuth = JSON.parse(localStorage.getItem("user"));
+
 let businessMarkupArray = [];
 let fullWarehouseList = [];
 let cached = false;
@@ -15,7 +18,8 @@ let isProductTable = false;
 // Functions to get and add businesses to html
 const getBusinesses = async () => {
     const response = await fetch("/api/businesses", {
-        method: "GET"
+        method: "GET",
+        headers: { "Authorization": `Bearer ${userAuth.token}` }
     });
 
     if (response.status === 200) {
