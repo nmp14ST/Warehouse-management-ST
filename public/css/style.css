@@ -247,6 +247,9 @@ input:focus{
     position: relative;
     top: 199px;
 }
+.company-page main form p {
+    width: 100%;
+}
 
 @media only screen and (max-width: 600px) {
     /* Landing */
