@@ -1,4 +1,5 @@
 const { login, register } = require("../../controllers/users");
+const { isAuth, isManager } = require("../../utils");
 
 const router = require("express").Router();
 
@@ -13,7 +14,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", isAuth, isManager, async (req, res) => {
     try {
         const user = await register(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.company, req.body.access);
 

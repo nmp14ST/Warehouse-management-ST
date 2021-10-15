@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const db = require("../../models");
+const { isAuth } = require("../../utils");
 
-router.get("/", async (req, res) => {
+router.get("/", isAuth, async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
 });
 
 // Route to get all warehouses for specific company
-router.get("/:name", async (req, res) => {
+router.get("/:name", isAuth, async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -38,7 +39,7 @@ router.get("/:name", async (req, res) => {
 });
 
 // Find a single warehouse by id
-router.get("/single/:id", async (req, res) => {
+router.get("/single/:id", isAuth, async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 

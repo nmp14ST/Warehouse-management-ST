@@ -2,6 +2,9 @@ const businessesBtn = document.getElementById("businesses");
 const warehousesBtn = document.getElementById("warehouses");
 const rightPanelSection = document.querySelector(".right-panel");
 
+// User for authentication
+const userAuth = JSON.parse(localStorage.getItem("user"));
+
 let businessMarkupArray = [];
 let fullWarehouseList = [];
 let cached = false;
@@ -12,15 +15,19 @@ let data;
 // Boolean to determine if building tables for warehouses or products
 let isProductTable = false;
 
-// Functions to get and add businesses to html
-const getBusinesses = async () => {
-    const response = await fetch("/api/businesses", {
-        method: "GET"
+// Function for "GET" method fetch requests
+const getFetchFunction = async (url) => {
+    const response = await fetch(url, {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${userAuth.token}` }
     });
 
-    if (response.status === 200) {
-        return await response.json();
+    if (response.status === 404) {
+        console.log("error");
+        return;
     }
+
+    return response.json();
 }
 
 // Switch case for traversing through the data
@@ -64,7 +71,7 @@ const getDetails = (details) => {
 const appendBusinesses = async () => {
     // Get businesses from db if not already obtained
     if (!cached) {
-        data = await getBusinesses();
+        data = await getFetchFunction("/api/businesses");
     }
     // Create html tree from data and if not cached (already build array for tree) add </ul> to end of list
     createList(data);
@@ -93,41 +100,13 @@ const getWarehouses = async (e) => {
     e.preventDefault();
 
     const name = e.target.getAttribute("data-name");
-    const warehouses = await queryWarehouses(name);
+    // Fetch warehouses for specific company
+    const warehouses = await getFetchFunction(`/api/warehouses/${name}`);
     // Create table from warehouses and make sure it is not a prodeuct table
     isProductTable = false;
     createTable(warehouses);
     // Remove active tab on business li in left-pnael nav bar
     document.getElementById("businesses").classList.remove("nav-list-item-active");
-}
-
-// Fetch request for all warehouses of a specific company
-const queryWarehouses = async (name) => {
-    const response = await fetch(`/api/warehouses/${name}`, {
-        method: "GET"
-    });
-
-    if (response.status === 404) {
-        console.log("Cant find warehouses for " + name);
-        return;
-    }
-
-    return response.json();
-}
-
-// Fetch request for all warehouses
-const queryAllWarehouses = async () => {
-    const response = await fetch("/api/warehouses", {
-        method: "GET"
-    });
-
-    if (response.status !== 200) {
-        console.log("Issues");
-    }
-
-    const warehouses = await response.json();
-
-    return warehouses;
 }
 
 // Get all warehouses and create table on interface screen
@@ -136,7 +115,7 @@ const getAllWarehouses = async (e) => {
 
     // Get warehouse data if dont already have it
     if (!fullWarehouseList.length) {
-        fullWarehouseList = await queryAllWarehouses();
+        fullWarehouseList = await getFetchFunction("/api/warehouses");
     }
     // Create table of warehouses and make sure not product table
     isProductTable = false;
@@ -255,25 +234,9 @@ const createDeleteAndEditButtons = (tr, ele) => {
 const getSingleWarehouse = async (e) => {
     const id = e.target.parentElement.getAttribute("data-id");
 
-    const warehouse = await queryWarehouse(id);
+    const warehouse = await getFetchFunction(`/api/warehouses/single/${id}`);
 
     showWarehouseInfo(warehouse);
-}
-
-//  Query single warehouse by id
-const queryWarehouse = async (id) => {
-    const response = await fetch(`/api/warehouses/single/${id}`, {
-        method: "GET"
-    });
-
-    if (response.status !== 200) {
-        console.log("err");
-        return;
-    }
-
-    const warehouse = await response.json();
-
-    return warehouse;
 }
 
 // Show information on warehouse (wh)
@@ -477,7 +440,7 @@ const submitProductForm = async (e) => {
 
     const response = await fetch(`/api/products/${whID}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${userAuth.token}` },
         body: JSON.stringify(body)
     });
 
@@ -549,7 +512,8 @@ const deleteProduct = async (e) => {
     const whID = document.getElementById("warehouse-id").getAttribute("data-id");
 
     const response = await fetch(`/api/products/${whID}/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${userAuth.token}` }
     });
 
     console.log(response.status);
@@ -621,7 +585,7 @@ const editProductForm = async (e) => {
 
     const reponse = await fetch(`api/products/${ID}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${userAuth.token}` },
         body: JSON.stringify(body)
     });
 

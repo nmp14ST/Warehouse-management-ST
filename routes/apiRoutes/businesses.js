@@ -5,7 +5,7 @@ const db = require("../../models");
 const { isAuth, isManager } = require("../../utils");
 require("dotenv").config();
 
-router.get("/", async (req, res) => {
+router.get("/", isAuth, async (req, res) => {
     try {
         await mongoose.connect(process.env.mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
