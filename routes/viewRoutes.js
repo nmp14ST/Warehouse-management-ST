@@ -28,6 +28,15 @@ router.get("/interface", (req, res) => {
     }
 });
 
+// Add company form 
+router.get("/addCompany", (req, res) => {
+    try {
+        res.status(200).sendFile(resolve("public", "views", "addCompany.html"));
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 // Any routes not found
 router.get("*", (req, res) => {
     try {
