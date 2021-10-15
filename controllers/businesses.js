@@ -46,7 +46,6 @@ const AddBusinessToTree = async (body) => {
         }
 
         findParent(business);
-        console.log(found);
 
         if (!found) throw { status: 400, message: "Failed to append" }
 
