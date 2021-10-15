@@ -241,6 +241,13 @@ input:focus{
 }
 /* End login page */
 
+/* Add company form */
+.header-add-company,
+.company-page main {
+    position: relative;
+    top: 199px;
+}
+
 @media only screen and (max-width: 600px) {
     /* Landing */
     main.landing header {
