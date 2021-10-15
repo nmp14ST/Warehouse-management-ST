@@ -4,6 +4,7 @@ const businessSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
     founded: Number,
     warehouses: {
