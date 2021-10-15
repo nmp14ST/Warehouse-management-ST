@@ -513,7 +513,7 @@ const deleteProduct = async (e) => {
 
     const response = await fetch(`/api/products/${whID}/${id}`, {
         method: "DELETE",
-        header: { "Authorization": `Bearer ${userAuth.token}` }
+        headers: { "Authorization": `Bearer ${userAuth.token}` }
     });
 
     console.log(response.status);
