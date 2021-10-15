@@ -6,6 +6,9 @@ const submitBtn = document.getElementById("submitBtn");
 const addCompanyFetch = async (e) => {
     e.preventDefault();
 
+    // Get token for authentication
+    const userAuth = JSON.parse(localStorage.getItem("user"));
+
     const body = {
         name: document.getElementById("name").value.trim(),
         founded: document.getElementById("founded").value,
@@ -14,7 +17,7 @@ const addCompanyFetch = async (e) => {
 
     const response = await fetch("/api/businesses", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${userAuth.token}` },
         body: JSON.stringify(body)
     });
 
@@ -23,7 +26,7 @@ const addCompanyFetch = async (e) => {
     // Add error message if not successful
     if (response.status !== 200) {
         const p = document.createElement("p");
-        p.classList.add("text-center", "error");
+        p.classList.add("text-center", "form-error");
         p.textContent = data.message;
 
         document.querySelector("form").appendChild(p);

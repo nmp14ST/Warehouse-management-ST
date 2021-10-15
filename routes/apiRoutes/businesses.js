@@ -2,6 +2,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 const { AddBusinessToTree } = require("../../controllers/businesses");
 const db = require("../../models");
+const { isAuth, isManager } = require("../../utils");
 require("dotenv").config();
 
 router.get("/", async (req, res) => {
@@ -23,7 +24,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", isAuth, isManager, async (req, res) => {
     try {
         await AddBusinessToTree(req.body);
 
