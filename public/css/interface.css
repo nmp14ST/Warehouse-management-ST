@@ -165,10 +165,6 @@ button.shift-button {
     margin: 0;
 }
 
-.right-panel.closed-left > ul {
-    position: relative;
-}
-
 .right-panel ul::before {
     content: "";
     position: absolute;
@@ -240,11 +236,13 @@ button.shift-button {
   box-shadow: 2px 20px 50px 0 rgb(0 0 0 / 7%);
 }
 
-.right-panel span {
+.right-panel span,
+.right-panel .span-btn-add {
   display: block;
 }
 
-.right-panel span.span-btn {
+.right-panel span.span-btn,
+.right-panel .span-btn-add {
     cursor: pointer;
     background: lightblue;
     margin: 2px 4px;
@@ -252,7 +250,13 @@ button.shift-button {
     box-shadow: 2px 2px 4px #555;
 }
 
-.right-panel span.span-btn:hover {
+.right-panel .span-btn-add {
+    text-decoration: none;
+    color: #000;
+}
+
+.right-panel span.span-btn:hover,
+.right-panel .span-btn-add:hover {
     background: rgb(144, 170, 255);
 }
 .right-panel span.span-btn:focus {
