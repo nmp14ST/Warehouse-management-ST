@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/d81acf0f70.js" crossorigin="anonymous"></script>
+    <link href="../css/style.css" rel="stylesheet" />
+</head>
+
+<body class="login-page company-page">
+    <nav class="flex-std-sb align-center">
+        <div class="nav-left">
+            <a href="/">
+                <img class="logo" src="../images/SkillStorm.png" alt="SkillStorm logo" />
+            </a>
+        </div>
+        <div class="nav-right">
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <header class="header-add-company">
+        <span class="login-lock">
+            <i class="fas fa-lock"></i>
+        </span>
+        <h1 class="roboto">Add Company</h1>
+    </header>
+
+    <main class="flex-std-c align-center">
+        <form class="roboto grid fr-5-columns">
+            <div class="form-error"></div>
+
+            <label for="email" class="label-2-fr">Enter Company Name</label>
+            <input class="input-4-fr" type="text" id="name" />
+
+            <label for="password" class="label-2-fr">Year Company was founded</label>
+            <input class="input-4-fr" type="number" id="founded" />
+
+            <button class="button-grid roboto" id="submitBtn" class="submit-btn">Submit</button>
+        </form>
+    </main>
+
+    <script src="../js/logout.js"></script>
+    <script src="../js/addCompany.js"></script>
+    <script>
+        if (!localStorage.getItem("user")) {
+            document.location.href = "/login";
+        }
+    </script>
+</body>
+
+</html>
