@@ -440,7 +440,7 @@ const submitProductForm = async (e) => {
 
     const response = await fetch(`/api/products/${whID}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${userAuth.token}` },
         body: JSON.stringify(body)
     });
 
@@ -512,7 +512,8 @@ const deleteProduct = async (e) => {
     const whID = document.getElementById("warehouse-id").getAttribute("data-id");
 
     const response = await fetch(`/api/products/${whID}/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        header: { "Authorization": `Bearer ${userAuth.token}` }
     });
 
     console.log(response.status);
@@ -584,7 +585,7 @@ const editProductForm = async (e) => {
 
     const reponse = await fetch(`api/products/${ID}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${userAuth.token}` },
         body: JSON.stringify(body)
     });
 
