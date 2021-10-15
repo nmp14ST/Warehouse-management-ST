@@ -6,7 +6,7 @@ const generateToken = user => {
         id: user._id,
         email: user.email,
         company: user.company,
-        accessLevel: user.access
+        access: user.access
     }, process.env.JWT_SECRET, {
         expiresIn: "10d"
     });
@@ -31,6 +31,7 @@ const isAuth = (req, res, next) => {
 
 // Top lvl auth
 const isManager = (req, res, next) => {
+    console.log(req.user);
     if (req.user && req.user.access === 1) {
         next();
     } else {
