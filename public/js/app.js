@@ -32,12 +32,7 @@ const createList = (items) => {
         console.log("Didnt query");
         return;
     }
-
-    switch (typeof items) {
-        case "object":
-            getDetails(items);
-            break;
-    }
+    getDetails(items);
 };
 
 // get details
@@ -56,7 +51,7 @@ const getDetails = (details) => {
             // skip
         } else {
             if (detail === "warehouses") {
-                businessMarkupArray.push(`<span data-id=${details["_id"]} data-name="${details["name"]}" class="span-btn">${detail}: ${details[detail]} </span>`);
+                businessMarkupArray.push(`<span data-id=${details["_id"]} data-name="${details["name"]}" class="span-btn">${detail}: ${details[detail]} </span><a href="/addCompany?id=${details["name"]}" class="span-btn-add">Add Business</a>`);
             } else {
                 businessMarkupArray.push(`<span>${details[detail]} </span>`);
             }
@@ -90,6 +85,7 @@ const appendBusinesses = async () => {
         });
     }
 }
+
 
 // Functions to get warehouses and add to html
 // Get warehouses for specific company
