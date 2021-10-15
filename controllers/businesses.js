@@ -27,19 +27,18 @@ const AddBusinessToTree = async (body) => {
             // For each business in array
             // Loop over properties to find company name and see if it matches.
             // If property is "children" and it is not empty, call this function for the array
-            // If name matches, push new business to children array
+            // If name matches, push new business to children array and return
             for (const company of bs) {
                 for (const prop in company) {
                     if (prop === "name") {
-                        console.log(company[prop]);
+
                         if (company[prop] === parent) {
-                            console.log("should add");
                             company["children"].push(newBusiness);
                             found = true;
                             return true;
                         }
+
                     } else if (prop === "children" && company[prop].length > 0) {
-                        console.log("Test");
                         findParent(company[prop]);
                     }
                 }
